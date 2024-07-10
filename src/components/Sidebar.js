@@ -1,7 +1,11 @@
 import { Button,Form } from 'react-bootstrap'
-import React from 'react'
+import React, { useState } from 'react'
+import Rating from './Rating'
 
 const Sidebar = () => {
+
+  const [rating,setRating]=useState(4)
+
   return (
     <div className='sidebar'>
       <span className='title'>Filter Products</span>
@@ -42,8 +46,8 @@ const Sidebar = () => {
         />
       </span>
       <span>
-        {/*<label style={{paddingRight:10}}>Rating: </label>
-        <Rating rating={byRating} style={{cursor:"pointer"}}/>*/}
+        <label style={{paddingRight:10}}>Rating: </label>
+        <Rating rating={rating} onClick={(i)=>setRating(i+1)} style={{cursor:"pointer"}}/>
       </span>
       <Button variant='light'>Clear filters</Button>
     </div>
