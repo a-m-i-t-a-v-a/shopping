@@ -1,25 +1,32 @@
-import React, { createContext } from 'react'
-import faker from 'faker'
+import React, { createContext, useContext, useEffect, useReducer } from 'react'
+import { cartReducer } from './Reducers'
 
 const Cart=createContext()
-
 const Context = ({children}) => {
 
-    const products=[...Array(20)].map(()=>({
-        id:faker.datatype.uuid(),
-        name:faker.commerce.productName(),
-        price:faker.commerce.price(),
-        image:faker.random.image(),
-        inStock:faker.random.arrayElement([0,3,5,6,7]),
-        fastDelivery:faker.datatype.booolean(),
-        ratings:faker.random.arrayElement([1,2,3,4,5])
-    }))
+    const [state,dispatch]=useReducer(cartReducer,{
+        products:[],
+        cart:[]
+    })
+    //console.log(products)
+    const fetchData=async()=>{
+        const data=await fetch('https://dummyjson.com/products')
+        const jsonData=await data.json()
+        dispatch({type:'set_products',payload:jsonData.products})
+    }
+
+    useEffect(()=>{
+        fetchData()
+    },[])
 
   return (
-    <Cart.Provider>
+    <Cart.Provider value={{state,dispatch}}>
        {children}
     </Cart.Provider>
   )
 }
 
 export default Context
+export const CartState=()=>{
+    return useContext(Cart)
+}
