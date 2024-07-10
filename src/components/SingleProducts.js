@@ -38,7 +38,6 @@ const SingleProducts = ({prod}) => {
                     })
                 }}>Add to Cart</Button>
              )}
-             
           </Card.Body>
        </Card>
     </div>
